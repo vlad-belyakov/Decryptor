@@ -22,10 +22,11 @@ public class PageInterface extends JFrame{
     private JButton Open;
     private JTextArea outputTextArea;
     private JButton Copy;
+    private JButton Formate;
 
     public PageInterface(){
         this.add(window);;
-        this.setSize(400,400);
+        this.setSize(300,300);
         this.pack();
         this.setVisible(true);
         //this.setLayout(null);
@@ -35,6 +36,7 @@ public class PageInterface extends JFrame{
         Open.addMouseListener(getOpenButtonListener());
         Build.addMouseListener(getBuildButtonListener());
         Copy.addMouseListener(getCopyButtonListener());
+        Formate.addMouseListener(getFormateButtonListener());
         /*window.setBackground(Color.GRAY);
         Copy.setForeground(Color.LIGHT_GRAY);
         Save.setBackground(Color.GRAY);
@@ -231,6 +233,30 @@ public class PageInterface extends JFrame{
             @Override
             public void mouseExited(MouseEvent mouseEvent) {
                 //Copy.setText("Copy");
+            }
+        };
+    }
+    private MouseListener getFormateButtonListener() {
+        return new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent mouseEvent) {}
+
+            @Override
+            public void mouseReleased(MouseEvent mouseEvent) {}
+
+            @Override
+            public void mouseEntered(MouseEvent mouseEvent) {
+                //Open.setText("форматировать");
+            }
+
+            @Override
+            public void mouseExited(MouseEvent mouseEvent) {
+                //Open.setText("Formate");
             }
         };
     }
