@@ -1,7 +1,7 @@
 package Vlad.com;
 
+import java.awt.*;
 import java.awt.datatransfer.*;
-import java.awt.Toolkit;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -13,8 +13,6 @@ public class PageInterface extends JFrame{
 
     String[] codingTypes = new String[]{"base64","обычный","JSon"};
     String[] enCodingTypes = new String[]{"base64","обычный","JSon"};
-    protected String codeVal;
-    protected String encodeVal;
     private JPanel window;
     private JComboBox code;
     private JComboBox encode;
@@ -26,18 +24,26 @@ public class PageInterface extends JFrame{
     private JButton Copy;
 
     public PageInterface(){
-        this.add(window);
+        this.add(window);;
         this.setSize(400,400);
         this.pack();
         this.setVisible(true);
         //this.setLayout(null);
 
 
-
         Save.addMouseListener(getSaveButtonListener());
         Open.addMouseListener(getOpenButtonListener());
         Build.addMouseListener(getBuildButtonListener());
         Copy.addMouseListener(getCopyButtonListener());
+        /*window.setBackground(Color.GRAY);
+        Copy.setForeground(Color.LIGHT_GRAY);
+        Save.setBackground(Color.GRAY);
+        Open.setBackground(Color.GRAY);
+        Build.setBackground(Color.GRAY);
+        inputTextArea.setBackground(Color.GRAY);
+        Copy.setBackground(Color.GRAY);
+        outputTextArea.setBackground(Color.GRAY);
+        */
         for(String s:codingTypes) {
             code.addItem(s);
         }
@@ -46,8 +52,6 @@ public class PageInterface extends JFrame{
         }
         code.setSelectedIndex(0);
         encode.setSelectedIndex(0);
-        codeVal = code.getSelectedItem().toString();
-        encodeVal = encode.getSelectedItem().toString();
 
         this.addWindowListener(getWindowListener());
     }
@@ -163,6 +167,13 @@ public class PageInterface extends JFrame{
                             outputTextArea.append(inputTextArea.getText());
                         }
                     }else if(code.getSelectedItem().toString().equals("JSon")){
+                        if(encode.getSelectedItem().toString().equals("base64")){
+                            Base_64 b = new Base_64();
+                            outputTextArea.append(b.codeToBase64(inputTextArea.getText()));
+                        }else{
+                            outputTextArea.append(inputTextArea.getText());
+                        }
+                    }else if(code.getSelectedItem().toString().equals("обычный")){
                         if(encode.getSelectedItem().toString().equals("base64")){
                             Base_64 b = new Base_64();
                             outputTextArea.append(b.codeToBase64(inputTextArea.getText()));
