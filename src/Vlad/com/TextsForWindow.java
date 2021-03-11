@@ -10,11 +10,11 @@ public class TextsForWindow {
         add("Ты точно это читаешь?");
         add("Жду косарик");
         add("0L/QtdGA0LXQstC10Ls/");
-        add("1");
-        add("2");
-        add("3");
-        add("4");
-        add("5");
+        add("Я для этого создавал этот класс)");
+        add("Пам парам");
+        add("Это не пасхалка");
+        add("Врум врум");
+        add("фантазия закончилась");
     }};
 
     protected static String Texts(){

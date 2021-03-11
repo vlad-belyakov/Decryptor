@@ -14,6 +14,7 @@ public class PageInterface extends JFrame{
     String[] codingTypes = new String[]{"base64","обычный","JSon"};
     String[] enCodingTypes = new String[]{"base64","обычный","JSon"};
     private JPanel window;
+    private JFrame wow;
     private JComboBox code;
     private JComboBox encode;
     private JTextArea inputTextArea;
@@ -25,10 +26,12 @@ public class PageInterface extends JFrame{
     private JButton Formate;
 
     public PageInterface(){
-        this.add(window);;
-        this.setSize(300,300);
-        this.pack();
-        this.setVisible(true);
+        wow = new JFrame(TextsForWindow.Texts());
+        wow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        wow.getContentPane().add(window);
+        wow.setSize(300,300);
+        wow.pack();
+        wow.setVisible(true);
         //this.setLayout(null);
 
 
@@ -53,7 +56,7 @@ public class PageInterface extends JFrame{
             encode.addItem(s);
         }
         code.setSelectedIndex(0);
-        encode.setSelectedIndex(0);
+        encode.setSelectedIndex(1);
 
         this.addWindowListener(getWindowListener());
     }
@@ -210,10 +213,10 @@ public class PageInterface extends JFrame{
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
                 if (outputTextArea != null) {
-                    String ctc = outputTextArea.getText();
-                    StringSelection stringSelection = new StringSelection(ctc);
-                    Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
-                    clpbrd.setContents(stringSelection, null);
+                    String copyText = outputTextArea.getText();
+                    StringSelection stringSelection = new StringSelection(copyText);
+                    Clipboard ctrlC = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    ctrlC.setContents(stringSelection, null);
                 } else {
 
                 }
