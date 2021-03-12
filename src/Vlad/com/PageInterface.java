@@ -34,7 +34,7 @@ public class PageInterface extends JFrame{
 
         Save.addMouseListener(getSaveButtonListener());
         Open.addMouseListener(getOpenButtonListener());
-        Decode.addMouseListener(getBuildButtonListener());
+        Decode.addMouseListener(getDecodeButtonListener());
         Copy.addMouseListener(getCopyButtonListener());
         Formate.addMouseListener(getFormateButtonListener());
         /*window.setBackground(Color.GRAY);
@@ -59,7 +59,7 @@ public class PageInterface extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 if (code.getSelectedIndex() == encode.getSelectedIndex()){
                     int i = code.getSelectedIndex();
-                    int ran = (int)(Math.random() * (enCodingTypes.length - 1));
+                    int ran = (int)(Math.random() * (enCodingTypes.length));
                     if(ran != i) {
                         encode.setSelectedIndex(ran);
                     }
@@ -74,7 +74,7 @@ public class PageInterface extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 if (encode.getSelectedIndex() == code.getSelectedIndex()){
                     int i = encode.getSelectedIndex();
-                    int ran = (int)(Math.random() * (codingTypes.length - 1));
+                    int ran = (int)(Math.random() * (codingTypes.length));
                     if(ran != i) {
                         code.setSelectedIndex(ran);
                     }
@@ -193,12 +193,13 @@ public class PageInterface extends JFrame{
             }
         };
     }
-    private MouseListener getBuildButtonListener() {
+    private MouseListener getDecodeButtonListener() {
         return new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
-                if(inputTextArea != null){
-                    if(code.getSelectedItem().toString().equals("base64")) {
+                if (inputTextArea != null) {
+                    outputTextArea.setText(null);
+                    if (code.getSelectedItem().toString().equals("base64")) {
                         if (encode.getSelectedItem().toString().equals("обычный")) {
                             //0KXQvtGA0L7RiNC+INC20LjQstC10YIg0L3QsCDRgdCy0LXRgtC1INCS0LjQvdC90Lgg0J/Rg9GFIQ==
                             Base_64 b = new Base_64();
@@ -209,18 +210,18 @@ public class PageInterface extends JFrame{
                         } else {
                             outputTextArea.append(inputTextArea.getText());
                         }
-                    }else if(code.getSelectedItem().toString().equals("JSon")){
-                        if(encode.getSelectedItem().toString().equals("base64")){
+                    } else if (code.getSelectedItem().toString().equals("JSon")) {
+                        if (encode.getSelectedItem().toString().equals("base64")) {
                             Base_64 b = new Base_64();
                             outputTextArea.append(b.codeToBase64(inputTextArea.getText()));
-                        }else{
+                        } else {
                             outputTextArea.append(inputTextArea.getText());
                         }
-                    }else if(code.getSelectedItem().toString().equals("обычный")){
-                        if(encode.getSelectedItem().toString().equals("base64")){
+                    } else if (code.getSelectedItem().toString().equals("обычный")) {
+                        if (encode.getSelectedItem().toString().equals("base64")) {
                             Base_64 b = new Base_64();
                             outputTextArea.append(b.codeToBase64(inputTextArea.getText()));
-                        }else{
+                        } else {
                             outputTextArea.append(inputTextArea.getText());
                         }
                     }
@@ -246,6 +247,7 @@ public class PageInterface extends JFrame{
             }
         };
     }
+
     private MouseListener getCopyButtonListener() {
         return new MouseListener() {
             @Override
