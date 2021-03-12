@@ -10,8 +10,8 @@ public class PageInterface extends JFrame{
 
     String[] codingTypes = new String[]{"base64","обычный","JSon"};
     String[] enCodingTypes = new String[]{"base64","обычный","JSon"};
-    private JPanel window;
-    private JFrame wow;
+    private JPanel panel;
+    private JFrame window;
     private JComboBox code;
     private JComboBox encode;
     private JTextArea inputTextArea;
@@ -23,12 +23,12 @@ public class PageInterface extends JFrame{
     private JButton Formate;
 
     public PageInterface(){
-        wow = new JFrame(TextsForWindow.Texts());
-        wow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        wow.getContentPane().add(window);
-        wow.setSize(300,300);
-        wow.pack();
-        wow.setVisible(true);
+        window = new JFrame(TextsForWindow.Texts());
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.getContentPane().add(panel);
+        window.setSize(300,300);
+        window.pack();
+        window.setVisible(true);
         //this.setLayout(null);
 
 
@@ -54,33 +54,21 @@ public class PageInterface extends JFrame{
         }
         code.setSelectedIndex(0);
         encode.setSelectedIndex(1);
-        code.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (code.getSelectedIndex() == encode.getSelectedIndex()){
-                    int i = code.getSelectedIndex();
-                    int ran = (int)(Math.random() * (enCodingTypes.length));
-                    if(ran != i) {
-                        encode.setSelectedIndex(ran);
-                    }
-                    else{
-
-                    }
+        code.addActionListener(e -> {
+            if (code.getSelectedIndex() == encode.getSelectedIndex()){
+                int i = code.getSelectedIndex();
+                int ran = (int)(Math.random() * (enCodingTypes.length));
+                if(ran != i) {
+                    encode.setSelectedIndex(ran);
                 }
             }
         });
-        encode.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (encode.getSelectedIndex() == code.getSelectedIndex()){
-                    int i = encode.getSelectedIndex();
-                    int ran = (int)(Math.random() * (codingTypes.length));
-                    if(ran != i) {
-                        code.setSelectedIndex(ran);
-                    }
-                    else{
-
-                    }
+        encode.addActionListener(e -> {
+            if (encode.getSelectedIndex() == code.getSelectedIndex()){
+                int i = encode.getSelectedIndex();
+                int ran = (int)(Math.random() * (codingTypes.length));
+                if(ran != i) {
+                    code.setSelectedIndex(ran);
                 }
             }
         });
@@ -120,7 +108,7 @@ public class PageInterface extends JFrame{
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
                 JFileChooser dialog = new JFileChooser();
-                dialog.showOpenDialog(window);
+                dialog.showOpenDialog(panel);
                 var file = dialog.getSelectedFile();
                 if(!(file == null)) {
                     if (file.isFile() && file.canRead()) {
@@ -159,7 +147,7 @@ public class PageInterface extends JFrame{
             public void mouseClicked(MouseEvent mouseEvent) {
                 if (outputTextArea != null) {
                     JFileChooser dialog = new JFileChooser();
-                    dialog.showSaveDialog(window);
+                    dialog.showSaveDialog(panel);
                     var file = dialog.getSelectedFile();
                     if((file != null)) {
                         FileWork f = new FileWork(file.getPath());
@@ -199,31 +187,36 @@ public class PageInterface extends JFrame{
             public void mouseClicked(MouseEvent mouseEvent) {
                 if (inputTextArea != null) {
                     outputTextArea.setText(null);
-                    if (code.getSelectedItem().toString().equals("base64")) {
-                        if (encode.getSelectedItem().toString().equals("обычный")) {
-                            //0KXQvtGA0L7RiNC+INC20LjQstC10YIg0L3QsCDRgdCy0LXRgtC1INCS0LjQvdC90Lgg0J/Rg9GFIQ==
-                            Base_64 b = new Base_64();
-                            outputTextArea.append(b.encodeFromBase64(inputTextArea.getText()));
-                        } else if (encode.getSelectedItem().toString().equals("JSon")) {
-                            Base_64 b = new Base_64();
-                            outputTextArea.append(b.encodeFromBase64(inputTextArea.getText()));
-                        } else {
-                            outputTextArea.append(inputTextArea.getText());
-                        }
-                    } else if (code.getSelectedItem().toString().equals("JSon")) {
-                        if (encode.getSelectedItem().toString().equals("base64")) {
-                            Base_64 b = new Base_64();
-                            outputTextArea.append(b.codeToBase64(inputTextArea.getText()));
-                        } else {
-                            outputTextArea.append(inputTextArea.getText());
-                        }
-                    } else if (code.getSelectedItem().toString().equals("обычный")) {
-                        if (encode.getSelectedItem().toString().equals("base64")) {
-                            Base_64 b = new Base_64();
-                            outputTextArea.append(b.codeToBase64(inputTextArea.getText()));
-                        } else {
-                            outputTextArea.append(inputTextArea.getText());
-                        }
+                    switch (code.getSelectedItem().toString()) {
+                        case "base64":
+                            if (encode.getSelectedItem().toString().equals("обычный")) {
+                                //0KXQvtGA0L7RiNC+INC20LjQstC10YIg0L3QsCDRgdCy0LXRgtC1INCS0LjQvdC90Lgg0J/Rg9GFIQ==
+                                Base_64 b = new Base_64();
+                                outputTextArea.append(b.encodeFromBase64(inputTextArea.getText()));
+                            } else if (encode.getSelectedItem().toString().equals("JSon")) {
+                                Base_64 b = new Base_64();
+                                outputTextArea.append(b.encodeFromBase64(inputTextArea.getText()));
+                            } else {
+                                outputTextArea.append(inputTextArea.getText());
+                            }
+                            break;
+                        case "JSon":
+                            if (encode.getSelectedItem().toString().equals("base64")) {
+                                Base_64 b = new Base_64();
+                                outputTextArea.append(b.codeToBase64(inputTextArea.getText()));
+                            } else {
+                                outputTextArea.append(inputTextArea.getText());
+                                int i;
+                            }
+                            break;
+                        case "обычный":
+                            if (encode.getSelectedItem().toString().equals("base64")) {
+                                Base_64 b = new Base_64();
+                                outputTextArea.append(b.codeToBase64(inputTextArea.getText()));
+                            } else {
+                                outputTextArea.append(inputTextArea.getText());
+                            }
+                            break;
                     }
                 }
             }
@@ -257,8 +250,6 @@ public class PageInterface extends JFrame{
                     StringSelection stringSelection = new StringSelection(copyText);
                     Clipboard ctrlC = Toolkit.getDefaultToolkit().getSystemClipboard();
                     ctrlC.setContents(stringSelection, null);
-                } else {
-
                 }
             }
 

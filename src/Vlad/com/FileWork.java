@@ -4,7 +4,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class FileWork {
-    private File file;
+    private final File file;
 
     public FileWork(String path) {
         this.file = new File(path);
@@ -13,7 +13,6 @@ public class FileWork {
     public String Read() throws IOException {
         FileInputStream fis = new FileInputStream(file);
         byte[] data = new byte[(int) file.length()];
-        //fis.read(data);
         fis.close();
 
         return new String(data, StandardCharsets.UTF_8);
