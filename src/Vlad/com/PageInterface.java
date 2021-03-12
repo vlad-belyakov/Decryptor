@@ -3,10 +3,7 @@ package Vlad.com;
 import java.awt.*;
 import java.awt.datatransfer.*;
 import javax.swing.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.*;
 import java.io.IOException;
 
 public class PageInterface extends JFrame{
@@ -18,7 +15,7 @@ public class PageInterface extends JFrame{
     private JComboBox code;
     private JComboBox encode;
     private JTextArea inputTextArea;
-    private JButton Build;
+    private JButton Decode;
     private JButton Save;
     private JButton Open;
     private JTextArea outputTextArea;
@@ -37,7 +34,7 @@ public class PageInterface extends JFrame{
 
         Save.addMouseListener(getSaveButtonListener());
         Open.addMouseListener(getOpenButtonListener());
-        Build.addMouseListener(getBuildButtonListener());
+        Decode.addMouseListener(getBuildButtonListener());
         Copy.addMouseListener(getCopyButtonListener());
         Formate.addMouseListener(getFormateButtonListener());
         /*window.setBackground(Color.GRAY);
@@ -57,10 +54,41 @@ public class PageInterface extends JFrame{
         }
         code.setSelectedIndex(0);
         encode.setSelectedIndex(1);
+        code.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (code.getSelectedIndex() == encode.getSelectedIndex()){
+                    int i = code.getSelectedIndex();
+                    int ran = (int)(Math.random() * (enCodingTypes.length - 1));
+                    if(ran != i) {
+                        encode.setSelectedIndex(ran);
+                    }
+                    else{
+
+                    }
+                }
+            }
+        });
+        encode.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (encode.getSelectedIndex() == code.getSelectedIndex()){
+                    int i = encode.getSelectedIndex();
+                    int ran = (int)(Math.random() * (codingTypes.length - 1));
+                    if(ran != i) {
+                        code.setSelectedIndex(ran);
+                    }
+                    else{
+
+                    }
+                }
+            }
+        });
 
         this.addWindowListener(getWindowListener());
     }
-    //JFrame mainWindow = new JFrame(TextsForWindow.Texts());
+
+
     private WindowListener getWindowListener() {
         return new WindowListener() {
             @Override
@@ -94,14 +122,18 @@ public class PageInterface extends JFrame{
                 JFileChooser dialog = new JFileChooser();
                 dialog.showOpenDialog(window);
                 var file = dialog.getSelectedFile();
-                if (file.isFile() && file.canRead()) {
-                    FileWork f = new FileWork(file.getPath());
-                    try {
-                        inputTextArea.setText(f.Read());
-                    } catch (IOException e) {
-                        inputTextArea.setText(e.getMessage());
+                if(!(file == null)) {
+                    if (file.isFile() && file.canRead()) {
+                        FileWork f = new FileWork(file.getPath());
+                        try {
+                            inputTextArea.setText(f.Read());
+                        } catch (IOException e) {
+                            inputTextArea.setText(e.getMessage());
+                        }
                     }
-                }
+                }else{
+                    return;
+               }
             }
 
             @Override
@@ -125,14 +157,20 @@ public class PageInterface extends JFrame{
         return new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
-                JFileChooser dialog = new JFileChooser();
-                dialog.showSaveDialog(window);
-                var file = dialog.getSelectedFile();
-                FileWork f = new FileWork(file.getPath());
-                try {
-                    f.Write(outputTextArea.getText());
-                } catch (IOException e) {
-                    outputTextArea.setText(e.getMessage());
+                if (outputTextArea != null) {
+                    JFileChooser dialog = new JFileChooser();
+                    dialog.showSaveDialog(window);
+                    var file = dialog.getSelectedFile();
+                    if((file != null)) {
+                        FileWork f = new FileWork(file.getPath());
+                        try {
+                            f.Write(outputTextArea.getText());
+                        } catch (IOException e) {
+                            outputTextArea.setText(e.getMessage());
+                        }
+                    }else{
+                        return;
+                    }
                 }
             }
 
@@ -204,7 +242,7 @@ public class PageInterface extends JFrame{
 
             @Override
             public void mouseExited(MouseEvent mouseEvent) {
-                //Build.setText("Build");
+                //Build.setText("Decode");
             }
         };
     }
