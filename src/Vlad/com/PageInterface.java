@@ -1,9 +1,13 @@
 package Vlad.com;
 
-import java.awt.*;
-import java.awt.datatransfer.*;
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 
 public class PageInterface extends JFrame{
@@ -14,16 +18,16 @@ public class PageInterface extends JFrame{
     private JFrame window;
     private JComboBox code;
     private JComboBox encode;
-    private JTextArea inputTextArea;
+    protected JTextArea inputTextArea;
     private JButton Decode;
     private JButton Save;
     private JButton Open;
-    private JTextArea outputTextArea;
+    protected JTextArea outputTextArea;
     private JButton Copy;
     private JButton Formate;
 
     public PageInterface(){
-        window = new JFrame(TextsForWindow.Texts());
+        window = new JFrame("Расшифровщик");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.getContentPane().add(panel);
         window.setSize(300,300);
@@ -37,23 +41,17 @@ public class PageInterface extends JFrame{
         Decode.addMouseListener(getDecodeButtonListener());
         Copy.addMouseListener(getCopyButtonListener());
         Formate.addMouseListener(getFormateButtonListener());
-        /*window.setBackground(Color.GRAY);
-        Copy.setForeground(Color.LIGHT_GRAY);
-        Save.setBackground(Color.GRAY);
-        Open.setBackground(Color.GRAY);
-        Build.setBackground(Color.GRAY);
-        inputTextArea.setBackground(Color.GRAY);
-        Copy.setBackground(Color.GRAY);
-        outputTextArea.setBackground(Color.GRAY);
-        */
+
         for(String s:codingTypes) {
             code.addItem(s);
         }
         for(String s:enCodingTypes) {
             encode.addItem(s);
         }
+
         code.setSelectedIndex(0);
         encode.setSelectedIndex(1);
+
         code.addActionListener(e -> {
             if (code.getSelectedIndex() == encode.getSelectedIndex()){
                 int i = code.getSelectedIndex();
@@ -103,6 +101,7 @@ public class PageInterface extends JFrame{
             public void windowDeactivated(WindowEvent windowEvent) {}
         };
     }
+
     private MouseListener getOpenButtonListener() {
         return new MouseListener() {
             @Override
@@ -141,6 +140,7 @@ public class PageInterface extends JFrame{
             }
         };
     }
+
     private MouseListener getSaveButtonListener() {
         return new MouseListener() {
             @Override
@@ -181,6 +181,7 @@ public class PageInterface extends JFrame{
             }
         };
     }
+
     private MouseListener getDecodeButtonListener() {
         return new MouseListener() {
             @Override
@@ -190,12 +191,12 @@ public class PageInterface extends JFrame{
                     switch (code.getSelectedItem().toString()) {
                         case "base64":
                             if (encode.getSelectedItem().toString().equals("обычный")) {
-                                //0KXQvtGA0L7RiNC+INC20LjQstC10YIg0L3QsCDRgdCy0LXRgtC1INCS0LjQvdC90Lgg0J/Rg9GFIQ==
                                 Base_64 b = new Base_64();
                                 outputTextArea.append(b.encodeFromBase64(inputTextArea.getText()));
                             } else if (encode.getSelectedItem().toString().equals("JSon")) {
                                 Base_64 b = new Base_64();
-                                outputTextArea.append(b.encodeFromBase64(inputTextArea.getText()));
+                                JSon_ j = new JSon_();
+                                outputTextArea.append(j.prettyView(b.encodeFromBase64(inputTextArea.getText())));
                             } else {
                                 outputTextArea.append(inputTextArea.getText());
                             }
@@ -206,15 +207,12 @@ public class PageInterface extends JFrame{
                                 outputTextArea.append(b.codeToBase64(inputTextArea.getText()));
                             } else {
                                 outputTextArea.append(inputTextArea.getText());
-                                int i;
                             }
                             break;
                         case "обычный":
                             if (encode.getSelectedItem().toString().equals("base64")) {
                                 Base_64 b = new Base_64();
                                 outputTextArea.append(b.codeToBase64(inputTextArea.getText()));
-                            } else {
-                                outputTextArea.append(inputTextArea.getText());
                             }
                             break;
                     }
@@ -222,9 +220,7 @@ public class PageInterface extends JFrame{
             }
 
             @Override
-            public void mousePressed(MouseEvent mouseEvent) {
-
-            }
+            public void mousePressed(MouseEvent mouseEvent) {}
 
             @Override
             public void mouseReleased(MouseEvent mouseEvent) {}
@@ -270,12 +266,16 @@ public class PageInterface extends JFrame{
             }
         };
     }
+
     private MouseListener getFormateButtonListener() {
         return new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
-
+                JSon_ json = new JSon_();
+                String s = inputTextArea.getText().toString();
+                outputTextArea.setText(json.prettyView(s));
             }
+
 
             @Override
             public void mousePressed(MouseEvent mouseEvent) {}

@@ -13,6 +13,7 @@ public class FileWork {
     public String Read() throws IOException {
         FileInputStream fis = new FileInputStream(file);
         byte[] data = new byte[(int) file.length()];
+        fis.read(data);
         fis.close();
 
         return new String(data, StandardCharsets.UTF_8);
