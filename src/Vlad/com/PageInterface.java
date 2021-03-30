@@ -25,15 +25,19 @@ public class PageInterface extends JFrame{
     protected JTextArea outputTextArea;
     private JButton Copy;
     private JButton Formate;
+    private JButton New;
+    private JButton Delete;
 
     public PageInterface(){
         window = new JFrame("Расшифровщик");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.getContentPane().add(panel);
-        window.setSize(300,300);
+        //window.setSize(700,700);
         window.pack();
+        // делает окно по размерам GUI
         window.setVisible(true);
         //this.setLayout(null);
+
 
 
         Save.addMouseListener(getSaveButtonListener());
@@ -291,6 +295,64 @@ public class PageInterface extends JFrame{
             @Override
             public void mouseExited(MouseEvent mouseEvent) {
                 //Open.setText("Formate");
+            }
+        };
+    }
+
+    private MouseListener getNewButtonListener() {
+        return new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+                /*JFrame newWindow = new JFrame("подтверждение");
+                JPanel newPanel = new JPanel();
+                newWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                newWindow.getContentPane().add(newPanel);
+                JTabbedPane newPane = new JTabbedPane();*/
+            }
+
+            @Override
+            public void mousePressed(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent mouseEvent) {}
+
+            @Override
+            public void mouseEntered(MouseEvent mouseEvent) {
+                //Save.setText("Новая");
+            }
+
+            @Override
+            public void mouseExited(MouseEvent mouseEvent) {
+                //Save.setText("New");
+            }
+        };
+    }
+
+    private MouseListener getDeleteButtonListener() {
+        return new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent mouseEvent) {}
+
+            @Override
+            public void mouseEntered(MouseEvent mouseEvent) {
+                //Save.setText("Удалить");
+            }
+
+            @Override
+            public void mouseExited(MouseEvent mouseEvent) {
+                //Save.setText("Delete");
             }
         };
     }

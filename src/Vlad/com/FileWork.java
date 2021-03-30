@@ -3,7 +3,7 @@ package Vlad.com;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-public class FileWork {
+public class FileWork{
     private final File file;
 
     public FileWork(String path) {
