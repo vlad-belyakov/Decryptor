@@ -1,7 +1,20 @@
 package Vlad.com;
 
+import java.io.IOException;
+
 public class Launcher {
-    public static void main(String[] args) {
-        new PageInterface();
+
+    public static void main(String[] args) throws IOException {
+        launch();
     }
+
+
+    public static void sett() throws IOException {
+        new StartingSettings();
+    }
+
+    public static void launch() throws IOException{
+        new PageDenisInterface();
+    }
+
 }

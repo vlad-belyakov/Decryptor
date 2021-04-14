@@ -24,4 +24,9 @@ public class FileWork{
         fis.write(content.getBytes());
         fis.close();
     }
+
+    public void Clean() throws IOException {
+        FileOutputStream fis = new FileOutputStream(file, false);
+        fis.close();
+    }
 }

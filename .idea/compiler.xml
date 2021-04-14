@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="DecryptorGit" target="10" />
+      <module name="DecryptorGit" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
