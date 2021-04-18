@@ -19,7 +19,6 @@ public class newVladTabb extends JFrame{
     private JButton saveButton;
     private JButton openButton;
     protected JTextArea outputTextArea;
-    private JButton copy;
     private JButton copyButton;
     private JButton settingsButton;
     private JPanel tab;
