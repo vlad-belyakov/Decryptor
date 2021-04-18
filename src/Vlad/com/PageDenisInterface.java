@@ -12,13 +12,13 @@ import java.io.InputStreamReader;
 
 public class PageDenisInterface  extends JFrame{
 
-    private JFrame window;
+    protected JFrame window;
     protected JTabbedPane tabs;
     private JPanel panel;
     private JTextArea inputTextArea;
-    private JButton open;
-    private JButton save;
-    private JButton copy;
+    private JButton openButton;
+    private JButton saveButton;
+    private JButton copyButton;
     private JButton decodeB64;
     private JButton newTab;
     private JButton closeTab;
@@ -38,8 +38,9 @@ public class PageDenisInterface  extends JFrame{
         window.setVisible(true);
 
 
-        save.addActionListener(click -> {
+        saveButton.addActionListener(click -> {
             if (inputTextArea != null) {
+                int select = tabs.getSelectedIndex();
                 JFileChooser dialog = new JFileChooser();
                 dialog.showSaveDialog(panel);
                 var file = dialog.getSelectedFile();
@@ -47,6 +48,8 @@ public class PageDenisInterface  extends JFrame{
                     FileWork f = new FileWork(file.getPath());
                     try {
                         f.Write(inputTextArea.getText());
+                        nameOfTab = file.getName();
+                        tabs.setTitleAt(select, nameOfTab);
                     } catch (IOException e) {
                         inputTextArea.setText(e.getMessage());
                     }
@@ -55,7 +58,7 @@ public class PageDenisInterface  extends JFrame{
                 }
             }
         });
-        open.addActionListener(click -> {
+        openButton.addActionListener(click -> {
             int select = tabs.getSelectedIndex();
             JFileChooser dialog = new JFileChooser();
             dialog.showOpenDialog(panel);
@@ -67,8 +70,8 @@ public class PageDenisInterface  extends JFrame{
                     try {
                         inputTextArea.setText(f.Read());
                         tabs.setTitleAt(select, nameOfTab);
-                    } catch (IOException e) {
-                        inputTextArea.setText(e.getMessage());
+                    } catch (IOException e){
+                        e.printStackTrace();
                     }
                 }
             } else {
@@ -84,7 +87,7 @@ public class PageDenisInterface  extends JFrame{
                 inputTextArea.append(b.codeToBase64(c));
             }
         });
-        copy.addActionListener(click -> {
+        copyButton.addActionListener(click -> {
             if (inputTextArea != null) {
                 String copyText = inputTextArea.getText();
                 StringSelection stringSelection = new StringSelection(copyText);
@@ -95,7 +98,7 @@ public class PageDenisInterface  extends JFrame{
         newTab.addActionListener(click -> {
             newTabb ta = null;
             try {
-                ta = new newTabb(window, tabs);
+                ta = new newTabb(tabs);
             } catch (IOException e) {
                 e.printStackTrace();
             }

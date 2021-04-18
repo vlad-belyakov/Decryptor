@@ -41,6 +41,7 @@ public class PageInterface extends JFrame{
 
         saveButton.addActionListener(click -> {
                 if (outputTextArea != null) {
+                    int select = tabs.getSelectedIndex();
                     JFileChooser dialog = new JFileChooser();
                     dialog.showSaveDialog(panel);
                     var file = dialog.getSelectedFile();
@@ -48,6 +49,8 @@ public class PageInterface extends JFrame{
                         FileWork f = new FileWork(file.getPath());
                         try {
                             f.Write(outputTextArea.getText());
+                            nameOfTab = file.getName();
+                            tabs.setTitleAt(select, nameOfTab);
                         } catch (IOException e) {
                             outputTextArea.setText(e.getMessage());
                         }
@@ -117,7 +120,7 @@ public class PageInterface extends JFrame{
             }
         });
         newTab.addActionListener(click -> {
-            newVladTabb nv = new newVladTabb();
+            newVladTabb nv = new newVladTabb(tabs);
             tabs.addTab("tab", nv.panel);
         });
         closeTab.addActionListener(click -> {
