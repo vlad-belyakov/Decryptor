@@ -10,12 +10,15 @@ public class JSon_ {
     public void JSon_(){}
 
     protected String prettyView(String s){
-        JsonElement jsonElement = new JsonParser().parse(s);
+        try {
+            JsonElement jsonElement = new JsonParser().parse(s);
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(jsonElement);
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(jsonElement);
-
-        return json;
+            return json;
+        } catch (Exception e){
+            return s;
+        }
     }
     /*{"url":"/context/detail/id/164892248/",
     "ci":{"id":277294,"name":"webDelivery","vertical":"pdp","version":2,"params":[{"name":"theme","text":"default"},

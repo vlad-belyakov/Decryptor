@@ -1,12 +1,11 @@
 package Vlad.com;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 
 public class newTabb extends JFrame {
@@ -18,6 +17,8 @@ public class newTabb extends JFrame {
     private JButton copyButton;
     private JButton openButton;
     private JButton saveButton;
+    private JButton decodeB64;
+    private JButton decodeJson;
     private String nameOfTab;
 
 
@@ -49,6 +50,24 @@ public class newTabb extends JFrame {
                 }
             }
         });
+        decodeJson.addActionListener(click -> {
+            if (inputTextArea != null){
+                String c = inputTextArea.getText();
+                inputTextArea.setText(null);
+                Base_64 b = new Base_64();
+                JSon_ j = new JSon_();
+                inputTextArea.append(j.prettyView(b.encodeFromBase64(c)));
+            }
+        });
+        decodeB64.addActionListener(click -> {
+            if (inputTextArea != null){
+                BufferedReader i = new BufferedReader(new InputStreamReader(System.in));
+                String c = inputTextArea.getText();
+                //inputTextArea.setText(null);
+                Base_64 b = new Base_64();
+                inputTextArea.setText(b.encodeFromBase64(c));
+            }
+        });
         openButton.addActionListener(click -> {
             JFileChooser dialog = new JFileChooser();
             dialog.showOpenDialog(panel);
@@ -69,14 +88,14 @@ public class newTabb extends JFrame {
                 return;
             }
         });
-        copyButton.addActionListener(click -> {
+        /*copyButton.addActionListener(click -> {
             if (inputTextArea != null) {
                 String copyText = inputTextArea.getText();
                 StringSelection stringSelection = new StringSelection(copyText);
                 Clipboard ctrlC = Toolkit.getDefaultToolkit().getSystemClipboard();
                 ctrlC.setContents(stringSelection, null);
             }
-        });
+        });*/
 
         this.addWindowListener(getWindowListener());
     }

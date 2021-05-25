@@ -1,9 +1,8 @@
 package Vlad.com;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.BufferedReader;
@@ -25,8 +24,10 @@ public class PageDenisInterface  extends JFrame{
     private JButton settings;
     private JPanel tab;
     private JButton decodeJson;
+    private JTextArea textArea1;
     public static boolean themeColor;
     public String nameOfTab;
+    int d = 1;
 
     public PageDenisInterface() throws IOException{
         window = new JFrame("Расшифровщик");
@@ -36,6 +37,8 @@ public class PageDenisInterface  extends JFrame{
         //window.pack();
         // делает окно по размерам GUI
         window.setVisible(true);
+
+        newTab.addMouseListener(newTabButtonListener());
 
 
         saveButton.addActionListener(click -> {
@@ -84,33 +87,34 @@ public class PageDenisInterface  extends JFrame{
                 String c = inputTextArea.getText();
                 inputTextArea.setText(null);
                 Base_64 b = new Base_64();
-                inputTextArea.append(b.codeToBase64(c));
+                inputTextArea.append(b.encodeFromBase64(c));
             }
         });
-        copyButton.addActionListener(click -> {
+        /*copyButton.addActionListener(click -> {
             if (inputTextArea != null) {
                 String copyText = inputTextArea.getText();
                 StringSelection stringSelection = new StringSelection(copyText);
                 Clipboard ctrlC = Toolkit.getDefaultToolkit().getSystemClipboard();
                 ctrlC.setContents(stringSelection, null);
             }
-        });
-        newTab.addActionListener(click -> {
+        });*/
+        /*newTab.addActionListener(click -> {
             newTabb ta = null;
             try {
                 ta = new newTabb(tabs);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            tabs.addTab("tab", ta.tab);
-        });
+            tabs.addTab("tab" + d, ta.tab);
+            d++;
+        });*/
         closeTab.addActionListener(click -> {
             int select = tabs.getSelectedIndex();
             if (select >= 0) {
                 tabs.removeTabAt(select);
             }
         });
-        settings.addActionListener(click -> {
+        /*settings.addActionListener(click -> {
             try {
                 Launcher.sett();
                 window.setVisible(false);
@@ -118,14 +122,15 @@ public class PageDenisInterface  extends JFrame{
                 e.printStackTrace();
             }
 
-        });
+        });*/
+
         decodeJson.addActionListener(click -> {
             if (inputTextArea != null){
                 String c = inputTextArea.getText();
                 inputTextArea.setText(null);
                 Base_64 b = new Base_64();
                 JSon_ j = new JSon_();
-                inputTextArea.append(j.prettyView(b.encodeFromBase64(c)));
+                inputTextArea.append(j.prettyView(c));
             }
         });
 
@@ -160,6 +165,34 @@ public class PageDenisInterface  extends JFrame{
 
             @Override
             public void windowDeactivated(WindowEvent windowEvent) {}
+        };
+    }
+
+    private MouseListener newTabButtonListener() {
+        return new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+                newTabb ta = null;
+                try {
+                    ta = new newTabb(tabs);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                tabs.addTab("tab" + d, ta.tab);
+                d++;
+            }
+
+            @Override
+            public void mousePressed(MouseEvent mouseEvent) {}
+
+            @Override
+            public void mouseReleased(MouseEvent mouseEvent) {}
+
+            @Override
+            public void mouseEntered(MouseEvent mouseEvent) { }
+
+            @Override
+            public void mouseExited(MouseEvent mouseEvent) { }
         };
     }
 

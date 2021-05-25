@@ -8,8 +8,12 @@ public class Base_64 {
         return Base64.getEncoder().encodeToString(code.getBytes());
     }
     protected String encodeFromBase64(String code){
-        byte[] actualByte= Base64.getDecoder().decode(code);
-        return new String(actualByte);
+        try {
+            byte[] actualByte= Base64.getDecoder().decode(code);
+            return new String(actualByte);
+        } catch (Exception e){
+            return code;
+        }
     }
 }
 /*{"url":"/context/detail/id/164892248/",
