@@ -24,7 +24,6 @@ public class PageDenisInterface  extends JFrame{
     private JButton settings;
     private JPanel tab;
     private JButton decodeJson;
-    private JTextArea textArea1;
     public static boolean themeColor;
     public String nameOfTab;
     int d = 1;
@@ -38,6 +37,9 @@ public class PageDenisInterface  extends JFrame{
         // делает окно по размерам GUI
         window.setVisible(true);
 
+
+        inputTextArea.setLineWrap(true);
+        inputTextArea.setWrapStyleWord(true);
         newTab.addMouseListener(newTabButtonListener());
 
 
@@ -85,9 +87,9 @@ public class PageDenisInterface  extends JFrame{
             if (inputTextArea != null){
                 BufferedReader i = new BufferedReader(new InputStreamReader(System.in));
                 String c = inputTextArea.getText();
-                inputTextArea.setText(null);
+                //inputTextArea.setText(null);
                 Base_64 b = new Base_64();
-                inputTextArea.append(b.encodeFromBase64(c));
+                inputTextArea.setText(b.encodeFromBase64(c));
             }
         });
         /*copyButton.addActionListener(click -> {
@@ -127,10 +129,10 @@ public class PageDenisInterface  extends JFrame{
         decodeJson.addActionListener(click -> {
             if (inputTextArea != null){
                 String c = inputTextArea.getText();
-                inputTextArea.setText(null);
+                //inputTextArea.setText(null);
                 Base_64 b = new Base_64();
                 JSon_ j = new JSon_();
-                inputTextArea.append(j.prettyView(c));
+                inputTextArea.setText(j.prettyView(b.encodeFromBase64(c)));
             }
         });
 

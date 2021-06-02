@@ -29,6 +29,8 @@ public class newTabb extends JFrame {
         this.setSize(300, 300);
         this.pack();
         this.setVisible(false);
+        inputTextArea.setLineWrap(true);
+        inputTextArea.setWrapStyleWord(true);
 
         saveButton.addActionListener(click -> {
             if (inputTextArea != null) {
@@ -53,10 +55,10 @@ public class newTabb extends JFrame {
         decodeJson.addActionListener(click -> {
             if (inputTextArea != null){
                 String c = inputTextArea.getText();
-                inputTextArea.setText(null);
+                //inputTextArea.setText(null);
                 Base_64 b = new Base_64();
                 JSon_ j = new JSon_();
-                inputTextArea.append(j.prettyView(b.encodeFromBase64(c)));
+                inputTextArea.setText(j.prettyView(b.encodeFromBase64(c)));
             }
         });
         decodeB64.addActionListener(click -> {
