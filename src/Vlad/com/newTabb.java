@@ -19,6 +19,7 @@ public class newTabb extends JFrame {
     private JButton saveButton;
     private JButton decodeB64;
     private JButton decodeJson;
+    private JButton codeB64;
     private String nameOfTab;
 
 
@@ -32,6 +33,13 @@ public class newTabb extends JFrame {
         inputTextArea.setLineWrap(true);
         inputTextArea.setWrapStyleWord(true);
 
+        codeB64.addActionListener(click ->{
+            if (inputTextArea != null) {
+                String c = inputTextArea.getText();
+                Base_64 b = new Base_64();
+                inputTextArea.setText(b.codeToBase64(c));
+            }
+        });
         saveButton.addActionListener(click -> {
             if (inputTextArea != null) {
                 JFileChooser dialog = new JFileChooser();

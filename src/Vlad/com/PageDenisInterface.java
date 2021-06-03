@@ -24,6 +24,7 @@ public class PageDenisInterface  extends JFrame{
     private JButton settings;
     private JPanel tab;
     private JButton decodeJson;
+    private JButton codeB64;
     public static boolean themeColor;
     public String nameOfTab;
     int d = 1;
@@ -43,6 +44,13 @@ public class PageDenisInterface  extends JFrame{
         newTab.addMouseListener(newTabButtonListener());
 
 
+        codeB64.addActionListener(click ->{
+            if (inputTextArea != null) {
+                String c = inputTextArea.getText();
+                Base_64 b = new Base_64();
+                inputTextArea.setText(b.codeToBase64(c));
+            }
+        });
         saveButton.addActionListener(click -> {
             if (inputTextArea != null) {
                 int select = tabs.getSelectedIndex();
@@ -99,16 +107,6 @@ public class PageDenisInterface  extends JFrame{
                 Clipboard ctrlC = Toolkit.getDefaultToolkit().getSystemClipboard();
                 ctrlC.setContents(stringSelection, null);
             }
-        });*/
-        /*newTab.addActionListener(click -> {
-            newTabb ta = null;
-            try {
-                ta = new newTabb(tabs);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            tabs.addTab("tab" + d, ta.tab);
-            d++;
         });*/
         closeTab.addActionListener(click -> {
             int select = tabs.getSelectedIndex();

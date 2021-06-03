@@ -5,7 +5,11 @@ import java.util.Base64;
 public class Base_64 {
 
     protected String codeToBase64(String code){
-        return Base64.getEncoder().encodeToString(code.getBytes());
+        try {
+            return Base64.getEncoder().encodeToString(code.getBytes());
+        } catch (Exception e){
+            return code;
+        }
     }
     protected String encodeFromBase64(String code){
         try {
