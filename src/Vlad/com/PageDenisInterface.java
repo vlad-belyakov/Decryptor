@@ -113,6 +113,7 @@ public class PageDenisInterface  extends JFrame{
             if (select >= 0) {
                 tabs.removeTabAt(select);
             }
+            d--;
         });
         /*settings.addActionListener(click -> {
             try {
