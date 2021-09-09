@@ -22,7 +22,7 @@ public class PageDenisInterface  extends JFrame{
     private JButton decodeJson;
     private JButton codeB64;
     public String nameOfTab;
-    public int d = 1;
+    public static int d = 1;
 
 
 
@@ -122,7 +122,7 @@ public class PageDenisInterface  extends JFrame{
 
         JTabbedPaneWithCloseButton jt = new JTabbedPaneWithCloseButton();
         int select = tabs.getSelectedIndex();
-        tabs.setTabComponentAt(0, jt.getTitlePanel(tabs, tab, "tab 0"));
+        tabs.setTabComponentAt(0, jt.getTitlePanel(tabs, tab, "tab" + String.valueOf(select)));
 
 
 

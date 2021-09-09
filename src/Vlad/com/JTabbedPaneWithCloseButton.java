@@ -17,7 +17,9 @@ public class JTabbedPaneWithCloseButton {
         closeButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                int i = tabbedPane.getTabCount();
                 tabbedPane.remove(panel);
+                PageDenisInterface.d--;
             }
         });
         titlePanel.add(closeButton);
