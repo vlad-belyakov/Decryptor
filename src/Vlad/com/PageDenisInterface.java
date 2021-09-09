@@ -41,7 +41,7 @@ public class PageDenisInterface  extends JFrame{
 
     public PageDenisInterface() throws IOException{
 
-
+        JTabbedPaneWithCloseButton jt = new JTabbedPaneWithCloseButton();
         window = new JFrame("Расшифровщик");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.getContentPane().add(panel);
@@ -76,6 +76,7 @@ public class PageDenisInterface  extends JFrame{
                         f.Write(inputTextArea.getText());
                         nameOfTab = file.getName();
                         tabs.setTitleAt(select, nameOfTab);
+                        jt.setTitle(select, nameOfTab, tabs, tab);
                     } catch (IOException e) {
                         inputTextArea.setText(e.getMessage());
                     }
@@ -94,6 +95,7 @@ public class PageDenisInterface  extends JFrame{
                     try {
                         inputTextArea.setText(f.Read());
                         tabs.setTitleAt(select, nameOfTab);
+                        jt.setTitle(select, nameOfTab, tabs, tab);
                     } catch (IOException e){
                         e.printStackTrace();
                     }
@@ -120,11 +122,10 @@ public class PageDenisInterface  extends JFrame{
 
         this.addWindowListener(getWindowListener());
 
-        JTabbedPaneWithCloseButton jt = new JTabbedPaneWithCloseButton();
         int select = tabs.getSelectedIndex();
-        tabs.setTabComponentAt(0, jt.getTitlePanel(tabs, tab, "tab" + String.valueOf(select)));
 
 
+        tabs.setTabComponentAt(0, jt.getTitlePanel(tabs, tab, "tab" + select));
 
 
     }
@@ -193,10 +194,8 @@ public class PageDenisInterface  extends JFrame{
                     }
                     d--;
                 });*/
-
                 JTabbedPaneWithCloseButton jt = new JTabbedPaneWithCloseButton();
                 tabs.setTabComponentAt(select, jt.getTitlePanel(tabs, ta.tab, tname));
-
                 d++;
             }
 
@@ -215,5 +214,7 @@ public class PageDenisInterface  extends JFrame{
 
 
     }
+
+
 
 }

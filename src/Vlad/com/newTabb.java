@@ -28,6 +28,7 @@ public class newTabb extends JFrame {
     public newTabb(JTabbedPane tabz, MouseListener newTabButtonListenerr) throws IOException {
 
 
+
         this.add(panel);
         this.setSize(300, 300);
         this.pack();
@@ -54,6 +55,8 @@ public class newTabb extends JFrame {
                         int select = tabz.getSelectedIndex();
                         nameOfTab = file.getName();
                         tabz.setTitleAt(select, nameOfTab);
+                        JTabbedPaneWithCloseButton jt = new JTabbedPaneWithCloseButton();
+                        jt.setTitle(select, nameOfTab, tabz, tab);
                     } catch (IOException e) {
                         inputTextArea.setText(e.getMessage());
                     }
@@ -92,6 +95,8 @@ public class newTabb extends JFrame {
                         inputTextArea.setText(f.Read());
                         int select = tabz.getSelectedIndex();
                         tabz.setTitleAt(select, nameOfTab);
+                        JTabbedPaneWithCloseButton jt = new JTabbedPaneWithCloseButton();
+                        jt.setTitle(select, nameOfTab, tabz, tab);
                     } catch (IOException e) {
                         inputTextArea.setText(e.getMessage());
                     }
