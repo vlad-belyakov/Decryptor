@@ -1,6 +1,7 @@
 package Vlad.com;
 
 import javax.swing.*;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.BufferedReader;
@@ -20,10 +21,11 @@ public class newTabb extends JFrame {
     private JButton decodeB64;
     private JButton decodeJson;
     private JButton codeB64;
+    //private JButton newTab;
     private String nameOfTab;
 
 
-    public newTabb(JTabbedPane tabz) throws IOException {
+    public newTabb(JTabbedPane tabz, MouseListener newTabButtonListenerr) throws IOException {
 
 
         this.add(panel);
@@ -108,7 +110,12 @@ public class newTabb extends JFrame {
         });*/
 
         this.addWindowListener(getWindowListener());
+
+        //newTab.addMouseListener(newTabButtonListenerr);
+
     }
+
+
 
     private WindowListener getWindowListener() {
         return new WindowListener() {

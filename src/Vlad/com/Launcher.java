@@ -14,6 +14,7 @@ public class Launcher {
     }
 
     public static void launch() throws IOException{
+        PageDenisInterface.style();
         new PageDenisInterface();
     }
 

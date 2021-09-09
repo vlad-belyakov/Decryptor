@@ -5,9 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class PageDenisInterface  extends JFrame{
 
@@ -17,19 +15,33 @@ public class PageDenisInterface  extends JFrame{
     private JTextArea inputTextArea;
     private JButton openButton;
     private JButton saveButton;
-    private JButton copyButton;
+    //private JButton copyButton;
     private JButton decodeB64;
     private JButton newTab;
-    private JButton closeTab;
-    private JButton settings;
     private JPanel tab;
     private JButton decodeJson;
     private JButton codeB64;
-    public static boolean themeColor;
     public String nameOfTab;
-    int d = 1;
+    public int d = 1;
+
+
+
+    protected static void style(){
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            // If Nimbus is not available, you can set the GUI to another look and feel.
+        }
+    }
 
     public PageDenisInterface() throws IOException{
+
+
         window = new JFrame("Расшифровщик");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.getContentPane().add(panel);
@@ -42,6 +54,7 @@ public class PageDenisInterface  extends JFrame{
         inputTextArea.setLineWrap(true);
         inputTextArea.setWrapStyleWord(true);
         newTab.addMouseListener(newTabButtonListener());
+        //newTabButtonListener().mouseClicked();
 
 
         codeB64.addActionListener(click ->{
@@ -66,8 +79,6 @@ public class PageDenisInterface  extends JFrame{
                     } catch (IOException e) {
                         inputTextArea.setText(e.getMessage());
                     }
-                }else{
-                    return;
                 }
             }
         });
@@ -87,48 +98,20 @@ public class PageDenisInterface  extends JFrame{
                         e.printStackTrace();
                     }
                 }
-            } else {
-                return;
             }
         });
         decodeB64.addActionListener(click -> {
             if (inputTextArea != null){
-                BufferedReader i = new BufferedReader(new InputStreamReader(System.in));
                 String c = inputTextArea.getText();
-                //inputTextArea.setText(null);
                 Base_64 b = new Base_64();
                 inputTextArea.setText(b.encodeFromBase64(c));
             }
         });
-        /*copyButton.addActionListener(click -> {
-            if (inputTextArea != null) {
-                String copyText = inputTextArea.getText();
-                StringSelection stringSelection = new StringSelection(copyText);
-                Clipboard ctrlC = Toolkit.getDefaultToolkit().getSystemClipboard();
-                ctrlC.setContents(stringSelection, null);
-            }
-        });*/
-        closeTab.addActionListener(click -> {
-            int select = tabs.getSelectedIndex();
-            if (select >= 0) {
-                tabs.removeTabAt(select);
-            }
-            d--;
-        });
-        /*settings.addActionListener(click -> {
-            try {
-                Launcher.sett();
-                window.setVisible(false);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
-        });*/
 
         decodeJson.addActionListener(click -> {
             if (inputTextArea != null){
                 String c = inputTextArea.getText();
-                //inputTextArea.setText(null);
                 Base_64 b = new Base_64();
                 JSon_ j = new JSon_();
                 inputTextArea.setText(j.prettyView(b.encodeFromBase64(c)));
@@ -137,11 +120,28 @@ public class PageDenisInterface  extends JFrame{
 
         this.addWindowListener(getWindowListener());
 
+        JTabbedPaneWithCloseButton jt = new JTabbedPaneWithCloseButton();
+        int select = tabs.getSelectedIndex();
+        tabs.setTabComponentAt(0, jt.getTitlePanel(tabs, tab, "tab 0"));
 
 
 
 
     }
+
+    /*private JButton closeTabM(){
+        JButton XBut = new JButton();
+        XBut.setText("x");
+        XBut.addActionListener(click -> {
+            int select = tabs.getSelectedIndex();
+            if (select >= 0) {
+                tabs.removeTabAt(select);
+            }
+            d--;
+        });
+        return XBut;
+    }*/
+
     private WindowListener getWindowListener() {
         return new WindowListener() {
             @Override
@@ -169,17 +169,34 @@ public class PageDenisInterface  extends JFrame{
         };
     }
 
-    private MouseListener newTabButtonListener() {
+    public MouseListener newTabButtonListener() {
         return new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
                 newTabb ta = null;
                 try {
-                    ta = new newTabb(tabs);
+                    ta = new newTabb(tabs, newTabButtonListener());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                tabs.addTab("tab" + d, ta.tab);
+                String tname = "tab" + d;
+                tabs.addTab(tname, ta.tab);
+                tabs.setSelectedIndex(d);
+                int select = tabs.getSelectedIndex();
+
+                /*JButton XBut = new JButton("x");
+                XBut.addActionListener(click -> {
+                    for (int i = 0; i < tabs.getTabCount(); i++) {
+                        if(tabs.getTabComponentAt(i) == XBut){
+                            tabs.removeTabAt(i);
+                        }
+                    }
+                    d--;
+                });*/
+
+                JTabbedPaneWithCloseButton jt = new JTabbedPaneWithCloseButton();
+                tabs.setTabComponentAt(select, jt.getTitlePanel(tabs, ta.tab, tname));
+
                 d++;
             }
 
@@ -195,59 +212,8 @@ public class PageDenisInterface  extends JFrame{
             @Override
             public void mouseExited(MouseEvent mouseEvent) { }
         };
+
+
     }
 
-    /*themeColor = Launcher.themeColor;
-        if(themeColor){
-            //60,63,65
-            panel.setBackground(new Color(60,63,65));
-            panel.setForeground(Color.WHITE);
-            tabs.setBackground(new Color(60,63,65));
-            tabs.setForeground(Color.WHITE);
-            window.setBackground(new Color(60,63,65));
-            window.setForeground(Color.WHITE);
-            inputTextArea.setBackground(new Color(60,63,65));
-            inputTextArea.setForeground(Color.WHITE);
-            decodeJson.setBackground(new Color(60,63,65));
-            decodeJson.setForeground(Color.WHITE);
-            decodeB64.setBackground(new Color(60,63,65));
-            decodeB64.setForeground(Color.WHITE);
-            save.setBackground(new Color(60,63,65));
-            save.setForeground(Color.WHITE);
-            open.setBackground(new Color(60,63,65));
-            open.setForeground(Color.WHITE);
-            copy.setBackground(new Color(60,63,65));
-            copy.setForeground(Color.WHITE);
-            newTab.setBackground(new Color(60,63,65));
-            newTab.setForeground(Color.WHITE);
-            closeTab.setBackground(new Color(60,63,65));
-            closeTab.setForeground(Color.WHITE);
-            settings.setBackground(new Color(60,63,65));
-            settings.setForeground(Color.WHITE);
-        } else {
-            panel.setBackground(Color.WHITE);
-            panel.setForeground(Color.BLACK);
-            tabs.setBackground(Color.WHITE);
-            tabs.setForeground(Color.BLACK);
-            window.setBackground(Color.WHITE);
-            window.setForeground(Color.BLACK);
-            inputTextArea.setBackground(Color.WHITE);
-            inputTextArea.setForeground(Color.BLACK);
-            decodeJson.setBackground(Color.WHITE);
-            decodeJson.setForeground(Color.BLACK);
-            decodeB64.setBackground(Color.WHITE);
-            decodeB64.setForeground(Color.BLACK);
-            save.setBackground(Color.WHITE);
-            save.setForeground(Color.BLACK);
-            open.setBackground(Color.WHITE);
-            open.setForeground(Color.BLACK);
-            copy.setBackground(Color.WHITE);
-            copy.setForeground(Color.BLACK);
-            newTab.setBackground(Color.WHITE);
-            newTab.setForeground(Color.BLACK);
-            closeTab.setBackground(Color.WHITE);
-            closeTab.setForeground(Color.BLACK);
-            settings.setBackground(Color.WHITE);
-            settings.setForeground(Color.BLACK);
-        }*/
 }
