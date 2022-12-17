@@ -21,6 +21,7 @@ public class PageDenisInterface  extends JFrame{
     private JPanel tab;
     private JButton decodeJson;
     private JButton codeB64;
+    private JButton del;
     public String nameOfTab;
     public static int d = 1;
 
@@ -63,6 +64,14 @@ public class PageDenisInterface  extends JFrame{
                 Base_64 b = new Base_64();
                 inputTextArea.setText(b.codeToBase64(c));
             }
+        });
+        del.addActionListener(click ->{
+            String text = inputTextArea.getText();
+            for (int i = 0; i <= 16; i++){
+                //StringBuilder sb = new StringBuilder(text.replaceAll("[^\\da-zA-Zа]", ""));
+                text = text.replaceAll("(.{48}).", "$1");
+            }
+            inputTextArea.setText(text);
         });
         saveButton.addActionListener(click -> {
             if (inputTextArea != null) {

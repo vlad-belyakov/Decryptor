@@ -21,6 +21,7 @@ public class newTabb extends JFrame {
     private JButton decodeB64;
     private JButton decodeJson;
     private JButton codeB64;
+    private JButton del;
     //private JButton newTab;
     private String nameOfTab;
 
@@ -73,6 +74,14 @@ public class newTabb extends JFrame {
                 JSon_ j = new JSon_();
                 inputTextArea.setText(j.prettyView(b.encodeFromBase64(c)));
             }
+        });
+        del.addActionListener(click ->{
+            String text = inputTextArea.getText();
+            for (int i = 0; i <= 16; i++){
+                //StringBuilder sb = new StringBuilder(text.replaceAll("[^\\da-zA-Zа]", ""));
+                text = text.replaceAll("(.{48}).", "$1");
+            }
+            inputTextArea.setText(text);
         });
         decodeB64.addActionListener(click -> {
             if (inputTextArea != null){
